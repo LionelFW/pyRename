@@ -1,5 +1,5 @@
 class Rule:
-    def __init__(self, primer=None, sFrom="a", prefix=None, bFilename=(False,""), suffix=None, extensions=[".txt"]):
+    def __init__(self, primer="Aucun", sFrom="a", prefix=None, bFilename=(False,""), suffix=None, extensions=[".txt"]):
         self.primer = primer
         self.sFrom = sFrom
         self.prefix = prefix
@@ -41,7 +41,7 @@ class Rule:
         return get_extensions
 
     def set_extensions(self, pextensions):
-        self.extensions =  pextensions
+        self.extensions = pextensions
 
     def __str__(self):
         return "primer : " + self.primer + ", sFrom : " + self.sFrom + ", prefix : " + self.prefix + ", bFilename : " + str(bFilename) + ", suffix : " + self.suffix + ", extensions :" + str(self.extensions)
