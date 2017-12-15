@@ -1,0 +1,14 @@
+missing module named nt - imported by os, shutil, ntpath, /home/lionelf/Documents/pyRename/guiMain.py
+missing module named org - imported by pickle, /home/lionelf/Documents/pyRename/guiMain.py
+excluded module named _frozen_importlib - imported by importlib, importlib.abc, /home/lionelf/Documents/pyRename/guiMain.py
+missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, /home/lionelf/Documents/pyRename/guiMain.py
+missing module named _winreg - imported by platform, /home/lionelf/Documents/pyRename/guiMain.py
+missing module named _scproxy - imported by urllib.request
+missing module named java - imported by platform, /home/lionelf/Documents/pyRename/guiMain.py
+missing module named 'java.lang' - imported by platform, /home/lionelf/Documents/pyRename/guiMain.py, xml.sax._exceptions
+missing module named vms_lib - imported by platform, /home/lionelf/Documents/pyRename/guiMain.py
+missing module named winreg - imported by platform, mimetypes, /home/lionelf/Documents/pyRename/guiMain.py, urllib.request
+missing module named 'org.python' - imported by copy, /home/lionelf/Documents/pyRename/guiMain.py, xml.sax
+missing module named msvcrt - imported by subprocess, /home/lionelf/Documents/pyRename/guiMain.py, getpass
+missing module named _winapi - imported by subprocess, /home/lionelf/Documents/pyRename/guiMain.py
+missing module named _dummy_threading - imported by dummy_threading, /home/lionelf/Documents/pyRename/guiMain.py
