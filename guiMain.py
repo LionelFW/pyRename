@@ -3,6 +3,16 @@ from tkinter.ttk import *
 from ruleset import *
 from rename import *
 from modal import *
+import os
+
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    try:
+        # PyInstaller creates a temp folder and stores path in _MEIPASS
+        base_path = sys._MEIPASS
+    except Exception:
+        base_path = os.path.abspath(".")
+    return os.path.join(base_path, relative_path)
 
 class GuiMain():
     def __init__(self, mode=True, rules=Ruleset(), renaming=Rename()):
@@ -21,7 +31,7 @@ class GuiMain():
         Initialise l'interface : création et placement des widgets 
         '''
         self.master.title("pyRename")
-        self.master.geometry("900x300")        
+        self.master.geometry("700x300")        
         self.menu = Menu(self.master)
         self.master.config(menu=self.menu, relief=None)
         self.mainMenu = Menu(self.menu)
@@ -37,7 +47,9 @@ class GuiMain():
         else:
             self.funcLabel = Label(self.master, text="Créer une règle")
             self.nameLabel = Label(self.master, text="Nom de la règle")
-            self.renameBtn = Button(self.master, text="Créer", command=None)
+            self.renameBtn = Button(self.master, text="Créer", command=self.createButton)
+        self.logo = PhotoImage(file=resource_path("logo.png"))
+        self.logoObject = Label(self.master, image = self.logo)
         self.ruleEntry = Entry(self.master)
         self.primerLabel = Label(self.master, text="Amorce")
         self.optSelect = StringVar()
@@ -64,6 +76,7 @@ class GuiMain():
 
         
         self.funcLabel.grid(row=0,column=1,padx=5,pady=2)
+        self.logoObject.grid(row=0,column=4)
         self.nameLabel.grid(row=1,column=0,padx=5,pady=2)
         self.ruleEntry.grid(row=1,column=1,padx=5,pady=2,sticky=W+E)
         self.primerLabel.grid(row=2,column=0,padx=5,pady=2)

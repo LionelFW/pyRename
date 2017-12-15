@@ -4,9 +4,9 @@ block_cipher = None
 
 
 a = Analysis(['guiMain.py'],
-             pathex=['/home/lionelf/Documents/pyRename'],
+             pathex=['C:\\Users\\lione\\pyRename'],
              binaries=[],
-             datas=[],
+             datas=[('logo.png', '.')],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
