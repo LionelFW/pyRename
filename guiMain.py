@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter.ttk import *
 from ruleset import *
 from rename import *
+from modal import *
 
 class GuiMain():
     def __init__(self, mode=True, rules=Ruleset(), renaming=Rename()):
@@ -12,6 +13,7 @@ class GuiMain():
         self.master = Tk()
         self.ruleset = rules
         self.mode = mode
+        self.checkBoxesState = None
         self.InitUI(None)
 
     def InitUI(self, mode):
@@ -31,12 +33,11 @@ class GuiMain():
         if(self.mode):
             self.funcLabel = Label(self.master, text="Renommer en lots")
             self.nameLabel = Label(self.master, text="Nom du répertoire")
-            self.renameBtn = Button(self.master, text="Renommer",command=None)        
+            self.renameBtn = Button(self.master, text="Renommer",command=self.renameButton)        
         else:
             self.funcLabel = Label(self.master, text="Créer une règle")
             self.nameLabel = Label(self.master, text="Nom de la règle")
             self.renameBtn = Button(self.master, text="Créer", command=None)
-
         self.ruleEntry = Entry(self.master)
         self.primerLabel = Label(self.master, text="Amorce")
         self.optSelect = StringVar()
@@ -45,7 +46,10 @@ class GuiMain():
         self.prefixEntry = Entry(self.master)
         self.prefixLabel = Label(self.master, text="Préfixe")
         self.varCbOriginal=BooleanVar()
+        self.varCbOriginal.set(1)
         self.varCbCustom=BooleanVar()
+        self.varCbCustom.set(0)
+        self.checkBoxesState = True
         self.cbOriginalName = Checkbutton(self.master, text="Nom original", command=lambda: self.switchComboState("original"), variable=self.varCbOriginal)
         self.filenameLabel = Label(self.master, text="Nom du fichier")
         self.suffixEntry = Entry(self.master)
@@ -102,15 +106,43 @@ class GuiMain():
         self.aboutWin.mainloop()
     
     def switchComboState(self, checkbox):
+        '''
+        Permet de garantir que l'utilisateur ne peut cocher qu'une checkbox à la fois
+        '''
         if checkbox=="original":
             self.varCbCustom.set(0)
+            self.checkBoxesState = True
         if checkbox=="custom":
             self.varCbOriginal.set(0)
+            self.checkBoxesState = False
+            
     def renameButton(self):
-        pass
+        if(self.optSelect.get()=="") | (self.varCbCustom.get()==self.varCbOriginal.get()) | (self.extensionEntry.get()==""):
+            Modal()
+            return  
+        bufferRule = Rule(primer=self.optSelect.get(),\
+                          sFrom=self.fromEntry.get(), \
+                          prefix=self.prefixEntry.get(), \
+                          bFilename=(self.checkBoxesState,self.entryCustomName.get()), \
+                          suffix=self.suffixEntry.get(), \
+                          extensions=self.inputToList(self.extensionEntry.get()))
+        Rename(directory_name=self.ruleEntry.get(),rule=bufferRule).renameFiles()
 
-    def createButton():
-        pass
+    def inputToList(self, input):  
+        return input.split(",")
+
+    def createButton(self):
+        if(self.optSelect.get()=="") | (self.varCbCustom.get()==self.varCbOriginal.get()) | (self.extensionEntry.get()==""):
+            Modal()
+            return  
+        bufferRule = Rule(primer=self.optSelect.get(),\
+                          sFrom=self.fromEntry.get(), \
+                          prefix=self.prefixEntry.get(), \
+                          bFilename=(self.checkBoxesState,self.entryCustomName.get()), \
+                          suffix=self.suffixEntry.get(), \
+                          extensions=self.inputToList(self.extensionEntry.get()))
+        self.ruleset.append(bufferRule)
+        self.ruleset.save()
 
 def main():
     defRuleset = Ruleset()

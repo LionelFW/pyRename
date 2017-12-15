@@ -38,11 +38,11 @@ class Rule:
         self.suffix = psuffix
 
     def get_extensions(self):
-        return get_extensions
+        return self.extensions
 
     def set_extensions(self, pextensions):
         self.extensions = pextensions
 
     def __str__(self):
-        return "primer : " + self.primer + ", sFrom : " + self.sFrom + ", prefix : " + self.prefix + ", bFilename : " + str(bFilename) + ", suffix : " + self.suffix + ", extensions :" + str(self.extensions)
+        return "primer : " + str(self.primer) + ", sFrom : " + str(self.sFrom) + ", prefix : " + str(self.prefix) + ", bFilename : " + str(self.bFilename) + ", suffix : " + str(self.suffix) + ", extensions :" + str(self.extensions)
     
