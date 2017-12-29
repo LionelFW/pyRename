@@ -3,6 +3,7 @@ from tkinter.ttk import *
 from ruleset import *
 from rename import *
 from modal import *
+from guiList import * 
 import os
 
 def resource_path(relative_path):
@@ -28,18 +29,20 @@ class GuiMain():
 
     def InitUI(self, mode):
         '''
-        Initialise l'interface : création et placement des widgets 
+        Initialise l'interface : création et placement des widgets
+        param :
+        mode - booléen : si True, mode renommage unique, sinon, mode création de règle
         '''
         self.master.title("pyRename")
         self.master.geometry("700x300")        
         self.menu = Menu(self.master)
         self.master.config(menu=self.menu, relief=None)
         self.mainMenu = Menu(self.menu)
-        self.mainMenu.add_command(label="Lister",command=lambda: self.refresh(True))
+        self.mainMenu.add_command(label="Lister",command=self.openListUI)
+        self.mainMenu.add_command(label="Renommer",command=lambda: self.refresh(True))
         self.mainMenu.add_command(label="Creer", command=lambda: self.refresh(False))
         self.menu.add_cascade(label="Regles",menu=self.mainMenu)
         self.menu.add_command(label="?",menu=None, command=self.about)
-
         if(self.mode):
             self.funcLabel = Label(self.master, text="Renommer en lots")
             self.nameLabel = Label(self.master, text="Nom du répertoire")
@@ -130,6 +133,9 @@ class GuiMain():
             self.checkBoxesState = False
             
     def renameButton(self):
+        '''
+        Lance le renommage des fichiers selon les widgets remplis
+        '''
         if(self.optSelect.get()=="") | (self.varCbCustom.get()==self.varCbOriginal.get()) | (self.extensionEntry.get()==""):
             Modal()
             return  
@@ -145,6 +151,9 @@ class GuiMain():
         return input.split(",")
 
     def createButton(self):
+        '''
+        Crée une règle et l'ajoute dans le ruleset.
+        '''
         if(self.optSelect.get()=="") | (self.varCbCustom.get()==self.varCbOriginal.get()) | (self.extensionEntry.get()==""):
             Modal()
             return  
@@ -154,13 +163,42 @@ class GuiMain():
                           bFilename=(self.checkBoxesState,self.entryCustomName.get()), \
                           suffix=self.suffixEntry.get(), \
                           extensions=self.inputToList(self.extensionEntry.get()))
-        self.ruleset.append(bufferRule)
+        self.ruleset.get_rules().append(bufferRule)
         self.ruleset.save()
 
+    def openListUI(self):
+        '''
+        Ouvre l'UI qui liste les règles
+        '''
+        GuiList(self)
+        return 
+
+
+    def fillUIfromRule(self, prule):
+        '''
+        remplit l'UI avec une règle
+        '''
+        self.optSelect.delete()
+        self.optSelect.insert(prule.get_primer())
+        self.prefixEntry.delete()
+        self.prefixEntry.insert(prule.get_prefix())
+        if(prule.get_bFilename[0] is True):
+            switchComboState("original")
+        else:
+            switchComboState("custom")
+            self.entryCustomName.delete()
+            self.entryCustomName.insert(prule.get_bFilename[1])
+        self.suffixEntry.delete()
+        self.suffixEntry.insert(prule.get_suffix())
+
+    def get_ruleset(self):
+        return self.ruleset
+
+    
 def main():
     defRuleset = Ruleset()
     defRuleset.load("pyRename.ini")
-    GuiMain(True)
+    GuiMain(True, defRuleset)
 
 if __name__ == '__main__':
     main()

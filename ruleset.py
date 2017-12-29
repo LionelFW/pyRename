@@ -18,7 +18,7 @@ class Ruleset:
         '''
         try:
             with open(filename,'r') as ruleFile:
-                ruleList=ruleFile.readlines
+                ruleList=ruleFile.readlines()
         except:
             return False
         self.rules = []
@@ -37,10 +37,11 @@ class Ruleset:
         except:
             return False
         for rule in self.rules:
-            str(rule.get_primer())+","+str(rule.get_sFrom())+","+str(rule.get_prefix())+","+str(rule.get_bFilename()+","+str(rule.get_suffix())+","+str(rule.get_extensions()))
+            str(rule.get_primer())+","+str(rule.get_sFrom())+","+str(rule.get_prefix())+","+str(rule.get_bFilename())+","+str(rule.get_suffix())+","+str(rule.get_extensions())
         return True
 
     def __str__(self):
+        sResult = ''
         for rule in self.rules:
             sResult += "\n"+str(rule)
         return sResult
