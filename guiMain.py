@@ -178,8 +178,7 @@ class GuiMain():
         '''
         remplit l'UI avec une règle
         '''
-        self.optSelect.delete()
-        self.optSelect.insert(prule.get_primer())
+        self.optSelect.set(prule.get_primer())
         self.prefixEntry.delete()
         self.prefixEntry.insert(prule.get_prefix())
         if(prule.get_bFilename[0] is True):

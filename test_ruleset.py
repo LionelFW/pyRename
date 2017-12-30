@@ -1,5 +1,4 @@
 import unittest
-import sys
 from ruleset import Ruleset
 
 class RulesetTest(unittest.TestCase):
