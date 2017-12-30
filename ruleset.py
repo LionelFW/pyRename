@@ -25,6 +25,7 @@ class Ruleset:
         for sRule in ruleList:
             lRule = sRule.split(",")
             self.rules.append(Rule(lRule[0],lRule[1],lRule[2],lRule[3],lRule[4],lRule[5]))
+        ruleFile.close()
         return True
 
     def save(self, filename="pyRename.ini"):
@@ -38,6 +39,7 @@ class Ruleset:
             return False
         for rule in self.rules:
             str(rule.get_primer())+","+str(rule.get_sFrom())+","+str(rule.get_prefix())+","+str(rule.get_bFilename())+","+str(rule.get_suffix())+","+str(rule.get_extensions())
+        ruleFile.close()
         return True
 
     def __str__(self):

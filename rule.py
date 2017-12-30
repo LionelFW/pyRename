@@ -1,5 +1,5 @@
 class Rule:
-    def __init__(self, primer="Aucun", sFrom="a", prefix=None, bFilename=(False,""), suffix=None, extensions=[".txt"]):
+    def __init__(self, primer="Aucun", sFrom="a", prefix="", bFilename=(False,""), suffix="", extensions=[".txt"]):
         self.primer = primer
         self.sFrom = sFrom
         self.prefix = prefix
